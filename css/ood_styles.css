@@ -7,3 +7,103 @@ div.fm ul.menu {
     color: #333;
     background-color: white;
 }
+
+
+/* these styles control the selection style of a currently selected file */
+.current-file {
+    /*FIXME: background-color: rgb(0,75,135); - OH-TECH blue does look sharp */
+    background-color: #08C;
+}
+
+.current-file, .current-file a{
+    color: white;
+}
+
+.selected-file {
+    /*FIXME: background-color: rgb(0,75,135); - OH-TECH blue does look sharp */
+    background-color: #08C;
+}
+
+.selected-file, .selected-file .name > a {
+      color: white;
+}
+
+
+
+/* bootstrap-esque panel styling applied to cloud commander's panels
+ * */
+.panel {
+  /*here we take both bootstrap .panel & .panel-default and put into .panel*/
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  /*FIXME: temporary fix - the panel heights are all messed up so for now just
+   * hide the bottom border and the box shadows */
+  /* -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); */
+  /* box-shadow: 0 1px 1px rgba(0,0,0,.05); */
+  border-bottom: 0px;
+}
+
+/* FIXME: tried using .panel-heading in path.hbs but the caching of the join.js
+ * in the browser which somehow embeds the path.hbs template in it threw me off.
+ * That said, having a pure CSS solution might be preferable to modifying the
+ * templates, so we can leave it with this for now.
+ * */
+.panel div:first-child{
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  background-color: #f5f5f5;
+  border-color: #ddd;
+  color: #333;
+}
+
+
+/** Below are the original bootstrap classes - we apply similar styles to the
+ * actual divs and classes cloud commander offers us
+ *
+/* .panel-heading{ */
+/*   padding: 10px 15px; */
+/*   border-bottom: 1px solid transparent; */
+/*   border-top-left-radius: 3px; */
+/*   border-top-right-radius: 3px; */
+/* } */
+
+/* .panel-default>.panel-heading { */
+/*   color: #333; */
+/*   background-color: #f5f5f5; */
+/*   border-color: #ddd; */
+/* } */
+/* .panel-body { */
+/*   padding: 15px; */
+/* } */
+
+.panel {
+  padding: 0px;
+}
+
+div.fm-header {
+  padding: 15px;
+}
+
+ul.files {
+  padding: 15px;
+}
+
+
+/* originally, name was at 26%
+ * and mode and owner were 13% and 18%
+ * so we add both to the name since we are hiding
+ * the other two columns
+ * */
+.name {
+   width: 57%;
+}
+
+
+/* hide mode and owner columns in files*/
+span.owner, span.mode {
+   display: none;
+}
