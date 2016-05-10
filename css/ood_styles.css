@@ -8,27 +8,21 @@ div.fm ul.menu {
     background-color: white;
 }
 
-
-/* these styles control the selection style of a currently selected file */
-.current-file {
-    /*FIXME: background-color: rgb(0,75,135); - OH-TECH blue does look sharp */
-    background-color: #08C;
-}
-
-.current-file, .current-file a{
-    color: white;
-}
-
 .selected-file {
     /*FIXME: background-color: rgb(0,75,135); - OH-TECH blue does look sharp */
+    /* background-color: #08C; */
+    background-color: rgb(71,10,104);
+}
+
+/* these styles control the selection style of a currently selected file */
+.current-file, .current-file.selected-file {
+    /*FIXME: background-color: rgb(0,75,135); - OH-TECH blue does look sharp */
     background-color: #08C;
 }
 
-.selected-file, .selected-file .name > a {
-      color: white;
+.current-file, .current-file a, .selected-file, .selected-file .name > a{
+    color: white;
 }
-
-
 
 /* bootstrap-esque panel styling applied to cloud commander's panels
  * */
