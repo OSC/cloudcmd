@@ -38,6 +38,35 @@
         <script>
             CloudCmd('{{ prefix }}');
 
+            // OSC_CUSTOM_CODE add a global function to get cookie data by name
+            // borrowed from http://www.w3schools.com/js/js_cookies.asp
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            // Set a cookie when the dotfiles box is checked.
+            function dotfiles() {
+                document.cookie = document.getElementById("checkbox-dotfiles").checked ? "dotfiles=true; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "dotfiles=false; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                //location.reload();
+            }
+
+            // Set the checkbox state based on cookie data
+            // FIXME This only works on initial page load.... figure out how to make it work on json updates
+            if (getCookie('dotfiles')) {
+                document.getElementById("checkbox-dotfiles").checked = true;
+            }
+
             function terminal() {
                 var terminal_path = '/pun/sys/shell/ssh/oakley';
                 window.open(terminal_path + DOM.getCurrentDirPath());
