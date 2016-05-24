@@ -34,6 +34,14 @@ if(typeof String.prototype.startsWith === "undefined"){
 
     </head>
     <body>
+    <div class="bootstrap panel-btns">
+        <button type="button" class="bootstrap icon icon-console btn btn-default btn-sm" onclick="terminal()">Open in Terminal</button>
+        <button type="button" class="bootstrap icon icon-paste btn btn-default btn-sm" onclick="DOM.Buffer.paste()">Paste</button>
+        <button type="button" class="bootstrap icon icon-file btn btn-default btn-sm" onclick="DOM.promptNewFile()">New File</button>
+        <button type="button" class="bootstrap icon icon-directory btn btn-default btn-sm" onclick="DOM.promptNewDir()">New Dir</button>
+        <button type="button" class="bootstrap icon icon-upload btn btn-default btn-sm" onclick="CloudCmd.Upload.show();">Upload</button>
+        <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-dotfiles" onclick="dotfilesChecked()" value="">Show Dotfiles</label>
+    </div>
         <div class="fm">{{ fm }}</div>
         <div id="js-keyspanel" class="keyspanel">
             <!-- OSC_CUSTOM_CODE remove this button >> <button id=f1      class="cmd-button reduce-text icon-help"      title="Help"            >F1</button> -->
@@ -65,6 +73,64 @@ jQuery12('body').on('panel_initialized', function(e){
             function terminal() {
                 var terminal_path = '/pun/sys/shell/ssh/oakley';
                 window.open(terminal_path + DOM.getCurrentDirPath());
+            }
+
+            // Update the css display tags on hidden files to hide or display
+            function dotfiles() {
+                if (isDotfilesChecked()) {
+                    jQuery12( ".files li.dotfile" ).css('display', '');
+                } else {
+                    jQuery12( ".files li.dotfile" ).css('display', 'none');
+                }
+            }
+
+            // Return state of dotfiles checkbox
+            function isDotfilesChecked() {
+                return document.getElementById("checkbox-dotfiles").checked;
+            }
+
+            // On page load, get the cookie and set the checkbox to the appropriate state
+            // then, call dotfiles() to update the css
+            window.onload = function() {
+                document.getElementById("checkbox-dotfiles").checked = ( getCookie('dotfiles') === 'true' );
+                dotfiles();
+            };
+
+            // Sets the cookie when the dotfiles box is checked
+            // then, call dotfiles() to update the css
+            function dotfilesChecked() {
+                if (isDotfilesChecked()) {
+                    setCookie('dotfiles', true, 9999);
+                } else {
+                    setCookie('dotfiles', false, 9999);
+                }
+                dotfiles();
+            }
+
+            // OSC_CUSTOM_CODE getCookie and setCookie methods borrowed from
+            // http://www.w3schools.com/js/js_cookies.asp
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+
+            // OSC_CUSTOM_CODE getCookie and setCookie methods borrowed from
+            // http://www.w3schools.com/js/js_cookies.asp
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
             }
 
             // OSC_CUSTOM_CODE publicize download method from lib/client/menu.js
@@ -109,7 +175,9 @@ jQuery12('body').on('panel_initialized', function(e){
                             DOM.toggleSelectedFile(file);
                     });
             }
-</script>
+        </script>
+</head>
 
+    
 </body>
 </html>
