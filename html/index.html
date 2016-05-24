@@ -69,11 +69,14 @@ if(typeof String.prototype.startsWith === "undefined"){
             // Event handler activates on page load
             jQuery12('body').on('panel_initialized', function(e){
                 initTree("{{ treeroot }}");
+                document.getElementById("checkbox-dotfiles").checked = ( getCookie('dotfiles') === 'true' );
+                dotfiles();
             });
 
             // Event handler activates after the panel update
             jQuery12('body').on('panel_dir_updated', function(e){
-
+                document.getElementById("checkbox-dotfiles").checked = ( getCookie('dotfiles') === 'true' );
+                dotfiles();
             });
 
             function terminal() {
@@ -83,10 +86,8 @@ if(typeof String.prototype.startsWith === "undefined"){
 
             // Update the css display tags on hidden files to hide or display
             function dotfiles() {
-                if (isDotfilesChecked()) {
-                    jQuery12( ".files li.dotfile" ).css('display', '');
-                } else {
-                    jQuery12( ".files li.dotfile" ).css('display', 'none');
+                if (!isDotfilesChecked()) {
+                    jQuery12( ".files li.dotfile" ).remove();
                 }
             }
 
@@ -97,16 +98,15 @@ if(typeof String.prototype.startsWith === "undefined"){
 
             // On page load, get the cookie and set the checkbox to the appropriate state
             // then, call dotfiles() to update the css
-            window.onload = function() {
-                document.getElementById("checkbox-dotfiles").checked = ( getCookie('dotfiles') === 'true' );
-                dotfiles();
-            };
+
 
             // Sets the cookie when the dotfiles box is checked
             // then, call dotfiles() to update the css
+            // since we're deleting the dotfiles when we hide them, we need to refresh when the user clicks
             function dotfilesChecked() {
                 if (isDotfilesChecked()) {
                     setCookie('dotfiles', true, 9999);
+                    CloudCmd.refresh();
                 } else {
                     setCookie('dotfiles', false, 9999);
                 }
