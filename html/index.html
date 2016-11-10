@@ -43,6 +43,7 @@
         <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-dotfiles" onclick="dotfilesChecked()" value="">Show Dotfiles</label>
         <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-ownermode" onclick="ownerModeChecked()" value="">Show Owner/Mode</label>
     </div>
+    <div><span class="fe-version">File Explorer {{ fileexplorer_version }}</span></div>
     <div class="fm">{{ fm }}</div>
 <script src="{{ prefix }}/lib/client/ood_tree.js"></script>
 <script src="{{ prefix }}/lib/client/ood.js"></script>
@@ -53,8 +54,7 @@
     });
     OOD = {
         file_editor: "{{ file_editor }}",
-        shell: "{{ shell }}",
-        ood_download: "{{ ood_download }}"
+        shell: "{{ shell }}"
     };
 </script>
 <script src="{{ prefix }}/cloudcmd.js"></script>
