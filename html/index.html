@@ -34,28 +34,32 @@
     <link rel="prefetch" href="{{ file_editor }}">
 </head>
 <body class="hide-owner-mode">
-    <div class="bootstrap panel-btns">
-        <button type="button" class="bootstrap icon icon-directory btn btn-default btn-sm" onclick="DOM.goToDirectory()">Go To...</button>
-        <button type="button" class="bootstrap icon icon-console btn btn-default btn-sm hidden" id="terminal-button" onclick="terminal()">Open in Terminal</button>
-        <button type="button" class="bootstrap icon icon-new btn btn-default btn-sm" onclick="DOM.promptNewFile()">New File</button>
-        <button type="button" class="bootstrap icon icon-directory btn btn-default btn-sm" onclick="DOM.promptNewDir()">New Dir</button>
-        <button type="button" class="bootstrap icon icon-upload btn btn-default btn-sm" onclick="CloudCmd.Upload.show();">Upload</button>
-        <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-dotfiles" onclick="dotfilesChecked()" value="">Show Dotfiles</label>
-        <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-ownermode" onclick="ownerModeChecked()" value="">Show Owner/Mode</label>
-    </div>
-    <div><span class="fe-version">File Explorer {{ fileexplorer_version }}</span></div>
-    <div class="fm">{{ fm }}</div>
+<div class="bootstrap panel-btns">
+    <button type="button" class="bootstrap icon icon-directory btn btn-default btn-sm" onclick="DOM.goToDirectory()">Go To...</button>
+    <button type="button" class="bootstrap icon icon-console btn btn-default btn-sm hidden" id="terminal-button" onclick="terminal()">Open in Terminal</button>
+    <button type="button" class="bootstrap icon icon-new btn btn-default btn-sm" onclick="DOM.promptNewFile()">New File</button>
+    <button type="button" class="bootstrap icon icon-directory btn btn-default btn-sm" onclick="DOM.promptNewDir()">New Dir</button>
+    <button type="button" class="bootstrap icon icon-upload btn btn-default btn-sm" onclick="CloudCmd.Upload.show();">Upload</button>
+    <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-dotfiles" onclick="dotfilesChecked()" value="">Show Dotfiles</label>
+    <label class="bootstrap checkbox-inline"><input type="checkbox" class="bootstrap" id="checkbox-ownermode" onclick="ownerModeChecked()" value="">Show Owner/Mode</label>
+</div>
+<div><span class="fe-version">File Explorer {{ fileexplorer_version }}</span></div>
+<div class="fm">{{ fm }}</div>
 <script src="{{ prefix }}/lib/client/ood_tree.js"></script>
 <script src="{{ prefix }}/lib/client/ood.js"></script>
 <script>
     // Event handler activates on page load
     jQuery12('body').on('panel_initialized', function(e){
-        initTree("{{ treeroot }}");
+        set_treeroot("{{ treeroot }}");
+        initTree(get_treeroot());
     });
     OOD = {
         file_editor: "{{ file_editor }}",
         shell: "{{ shell }}",
-        upload_max: {{ upload_max }}
+        upload_max: {{ upload_max }},
+        treeroot: "{{ treeroot }}",
+        treeroottitle: "{{ treerootitle }}",
+        home_dir: "{{ home_dir }}"
     };
 </script>
 <script src="{{ prefix }}/cloudcmd.js"></script>
